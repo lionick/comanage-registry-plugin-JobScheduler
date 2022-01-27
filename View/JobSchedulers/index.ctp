@@ -8,14 +8,6 @@ $this->Html->addCrumb(_txt('ct.job_schedulers'));
 
 ?>
 
-<div id="sorter" class="listControl">
-  <?php print _txt('fd.sort.by'); ?>:
-  <ul>
-    <li class="spin"><?php print $this->Paginator->sort('id', _txt('fd.name')); ?></li>
-    <li class="spin"><?php print $this->Paginator->sort('job_type', _txt('fd.status')); ?></li>
-  </ul>
-</div>
-
 <table id="co_people" style="clear:both" class="population-index">
   <tr>
     <th>
@@ -31,7 +23,13 @@ $this->Html->addCrumb(_txt('ct.job_schedulers'));
       Failure Summary
     </th>
     <th>
+      Tries
+    </th>
+    <th>
       Created
+    </th>
+    <th>
+      Actions
     </th>
   </tr>
   <?php
@@ -69,8 +67,40 @@ $this->Html->addCrumb(_txt('ct.job_schedulers'));
       <td>
         <span class="person-status">
           <?php
+          print $job[0]['tries'];
+          ?>
+      </td>
+      <td>
+        <span class="person-status">
+          <?php
           print $job[0]['created'];
           ?>
+      </td>
+      <td>
+        <span class="action">
+        <?php 
+        
+          if($vv_permissions['delete']) {
+            print '<button type="button" class="deletebutton" title="' . _txt('op.delete')
+              . '" onclick="javascript:js_confirm_generic(\''
+              . _txt('js.remove') . '\',\''    // dialog body text
+              . $this->Html->url(              // dialog confirm URL
+                array(
+                'plugin' => 'job_scheduler', // XXX can inflect from $vv_authenticator['Authenticator']['plugin']
+                'controller' => 'job_schedulers',
+                'action' => 'delete',
+                $job[0]['id']
+                )
+              ) . '\',\''
+              . _txt('op.remove') . '\',\''    // dialog confirm button
+              . _txt('op.cancel') . '\',\''    // dialog cancel button
+              . _txt('op.remove') . '\',[\''   // dialog title
+              . filter_var(_jtxt($job[0]['job_params']),FILTER_SANITIZE_STRING)  // dialog body text replacement strings
+              . '\']);">'
+              . _txt('op.delete')
+              . '</button>';
+          }
+        ?>
       </td>
     </tr>
 
@@ -92,8 +122,6 @@ if (empty($job_scheduler)) {
   print('</div>');
 }
 ?>
-
-<?php print $this->element("pagination"); ?>
 <div class="clearfix"></div>
 
 </div>

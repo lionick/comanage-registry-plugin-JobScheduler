@@ -32,6 +32,8 @@ global $cm_lang, $cm_texts;
 // a different order than they were passed.
 
 $cm_job_scheduler_texts['en_US'] = array(
+    'ct.job_scheduler_configs.1' => 'Job Scheduler Configuration',
+    'pl.jobschedulerconfig.settings' => 'Settings',
     'ct.job_schedulers.1' => 'Job Scheduler',
     'ct.job_schedulers' => 'Job Schedulers'
 );

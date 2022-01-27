@@ -1,6 +1,5 @@
 <?php
 
-App::import('Model', 'ConnectionManager');
 App::uses('Security', 'Utility');
 App::uses('Hash', 'Utility');
 
@@ -16,6 +15,9 @@ class JobScheduler extends AppModel
     public $actsAs = array('Containable',
                            'Changelog' => array('priority' => 5));
 
+     // Association rules from this model to other models
+    public $belongsTo = array("Co");                    // A Job Scheduler is attached to one CO
+
     /**
      * Expose menu items.
      *
@@ -29,8 +31,8 @@ class JobScheduler extends AppModel
         return array(
             'coconfig' => array(_txt('ct.job_schedulers.1') =>
             array(
-                'controller' => 'job_schedulers',
-                'action'     => 'index'
+                'controller' => 'job_scheduler_configs',
+                'action'     => 'edit'
             )),
         );
     }
@@ -84,4 +86,42 @@ class JobScheduler extends AppModel
             'allowEmpty' => true
         ),
     );
+
+
+    /**
+     * Job Scheduler Functionality
+     *  
+     * @param  mixed $pluginTarget
+     * @param  mixed $pluginModel
+     * @param  mixed $provisioningData
+     * @return void
+     */
+    public function addJobScheduler($pluginTarget, $pluginModel, $provisioningData)
+    {
+    
+    $group = false;
+    $person = false;
+    // Add background jobs only for CoPerson/ CoGroup for now
+    if($this->Co->CoSetting->backgroundJobEnabled(2) && (!empty($provisioningData['CoGroup']['id']) || !empty($provisioningData['CoPerson']['id']))) {
+
+        if(!empty($provisioningData['CoGroup']['id'])) {
+        $group = true;
+        $provisionGroup='CoGroup';
+        }
+        
+        if(!empty($provisioningData['CoPerson']['id'])) {
+        $person = true;
+        $provisionPerson='CoPerson';
+        }
+        if($group == true) {
+        $this->save(array('id' => null, 'co_id' => $provisioningData["CoGroup"]["co_id"], 'job_type' => 'job', 'job_params' => 'provisioner '. $pluginTarget[$pluginModel->name]["co_provisioning_target_id"] . ' ' .  $provisionGroup . ' ' . $provisioningData['CoGroup']['id'], 'failure_summary' => '', 'tries' => 0, 'created' => date('Y-m-d H:i:s')), false);
+        }
+        if($person == true) {
+        $this->save(array('id' => null, 'co_id' => $provisioningData["CoPerson"]["co_id"], 'job_type' => 'job', 'job_params' => 'provisioner '. $pluginTarget[$pluginModel->name]["co_provisioning_target_id"] . ' ' .  $provisionPerson . ' ' . $provisioningData['CoPerson']['id'], 'failure_summary' => '', 'tries' => 0, 'created' => date('Y-m-d H:i:s')), false);
+        }
+        return true;
+    } else {
+        return false;
+    }
+    }
 }

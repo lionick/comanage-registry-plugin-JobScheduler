@@ -54,7 +54,24 @@ class AppSchema extends CakeSchema {
     'job_type' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 128),
     'job_params' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 128),
     'failure_summary' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 128),
+    'tries'=> array('type' => 'integer', 'null' => true, 'default' => null),
     'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
+    'indexes' => array(
+      'PRIMARY' => array('unique' => true, 'column' => 'id')
+    ),
+    'tableParameters' => array()
+  );
+
+  public $job_scheduler_configs = array(
+    'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 11, 'key' => 'primary'),
+    'co_id' => array('type' => 'integer', 'null' => true, 'default' => null),
+    'job_scheduler_config_id' => array('type' => 'integer', 'null' => true, 'default' => null),
+    'job_max_tries' => array('type' => 'integer', 'null' => false, 'default' => null),
+    'actor_identifier' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 256),
+    'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
+    'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
+    'deleted' => array('type' => 'boolean', 'null' => false, 'default' => false),
+    'revision' => array('type' => 'integer', 'null' => false, 'default' => null),
     'indexes' => array(
       'PRIMARY' => array('unique' => true, 'column' => 'id')
     ),

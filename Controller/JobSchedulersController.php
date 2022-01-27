@@ -6,13 +6,6 @@ class JobSchedulersController extends StandardController
   // Class name, used by Cake
   public $name = 'JobSchedulers';
   
-  // Establish pagination parameters for HTML views
-  public $paginate = array(
-    'limit' => 25,
-    'order' => array(
-      'id' => 'asc'
-    )
-  );
    /**
   * By default a new CSRF token is generated for each request, and each token can only be used once.
   * If a token is used twice, the request will be blackholed. Sometimes, this behaviour is not desirable,
@@ -60,10 +53,17 @@ class JobSchedulersController extends StandardController
       //add_job_scheduler();
       $query='SELECT * FROM cm_job_schedulers';
       $jobs = $this->JobScheduler->query($query);
-      
       $this->set('job_scheduler',$jobs);
       
     }
+  }
+
+  public function delete($id) 
+  { 
+      $this->JobScheduler->query("DELETE FROM cm_job_schedulers WHERE id=".$id.";");
+      $this->Flash->set(_txt('er.deleted-a', array(filter_var($id,FILTER_SANITIZE_SPECIAL_CHARS))), array('key' => 'success'));
+      $this->performRedirect();
+     
   }
 
   /**
@@ -84,8 +84,11 @@ class JobSchedulersController extends StandardController
   
     // Determine what operations this user can perform
     $p['index'] = ($roles['cmadmin'] || $roles['coadmin']);
+    $p['delete'] = ($roles['cmadmin'] || $roles['coadmin']);
+
     $this->set('vv_permissions', $p);
     
     return($p[$this->action]);
   }
+
 }
