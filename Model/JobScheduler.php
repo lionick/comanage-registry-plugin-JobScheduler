@@ -9,14 +9,10 @@ class JobScheduler extends AppModel
     public $cmPluginType = 'other';
 
     // Default display field for cake generated views
-    public $displayField = 'name';
-
-    // Add behaviors
-    public $actsAs = array('Containable',
-                           'Changelog' => array('priority' => 5));
+    public $displayField = 'job_params';
 
      // Association rules from this model to other models
-    public $belongsTo = array("Co");                    // A Job Scheduler is attached to one CO
+    public $belongsTo = array("Co");  // A Job Scheduler is attached to one CO
 
     /**
      * Expose menu items.
@@ -98,30 +94,36 @@ class JobScheduler extends AppModel
      */
     public function addJobScheduler($pluginTarget, $pluginModel, $provisioningData)
     {
-    
-    $group = false;
-    $person = false;
-    // Add background jobs only for CoPerson/ CoGroup for now
-    if($this->Co->CoSetting->backgroundJobEnabled(2) && (!empty($provisioningData['CoGroup']['id']) || !empty($provisioningData['CoPerson']['id']))) {
+        $group = false;
+        $person = false;
+        $co_id = null;
+        // Determine co_id
+        if(!empty($provisioningData["CoGroup"]["co_id"])) {
+            $co_id = $provisioningData["CoGroup"]["co_id"];
+        }
+        else if(!empty($provisioningData["CoPerson"]["co_id"])) {
+            $co_id = $provisioningData["CoPerson"]["co_id"];
+        }
+        // Add background jobs only for CoPerson/ CoGroup for now
+        if(!empty($co_id) && $this->Co->CoSetting->backgroundJobEnabled($co_id) && (!empty($provisioningData['CoGroup']['id']) || !empty($provisioningData['CoPerson']['id']))) {
 
-        if(!empty($provisioningData['CoGroup']['id'])) {
-        $group = true;
-        $provisionGroup='CoGroup';
+            if(!empty($provisioningData['CoGroup']['id'])) {
+                $group = true;
+                $provisionGroup='CoGroup';
+            }       
+            if(!empty($provisioningData['CoPerson']['id'])) {
+                $person = true;
+                $provisionPerson='CoPerson';
+            }
+            if($group == true) {
+                $this->save(array('id' => null, 'co_id' => $provisioningData["CoGroup"]["co_id"], 'job_type' => 'job', 'job_params' => 'provisioner '. $pluginTarget[$pluginModel->name]["co_provisioning_target_id"] . ' ' .  $provisionGroup . ' ' . $provisioningData['CoGroup']['id'], 'failure_summary' => '', 'tries' => 0, 'created' => date('Y-m-d H:i:s')), false);
+            }
+            if($person == true) {
+                $this->save(array('id' => null, 'co_id' => $provisioningData["CoPerson"]["co_id"], 'job_type' => 'job', 'job_params' => 'provisioner '. $pluginTarget[$pluginModel->name]["co_provisioning_target_id"] . ' ' .  $provisionPerson . ' ' . $provisioningData['CoPerson']['id'], 'failure_summary' => '', 'tries' => 0, 'created' => date('Y-m-d H:i:s')), false);
+            }
+            return true;
+        } else {
+            return false;
         }
-        
-        if(!empty($provisioningData['CoPerson']['id'])) {
-        $person = true;
-        $provisionPerson='CoPerson';
-        }
-        if($group == true) {
-        $this->save(array('id' => null, 'co_id' => $provisioningData["CoGroup"]["co_id"], 'job_type' => 'job', 'job_params' => 'provisioner '. $pluginTarget[$pluginModel->name]["co_provisioning_target_id"] . ' ' .  $provisionGroup . ' ' . $provisioningData['CoGroup']['id'], 'failure_summary' => '', 'tries' => 0, 'created' => date('Y-m-d H:i:s')), false);
-        }
-        if($person == true) {
-        $this->save(array('id' => null, 'co_id' => $provisioningData["CoPerson"]["co_id"], 'job_type' => 'job', 'job_params' => 'provisioner '. $pluginTarget[$pluginModel->name]["co_provisioning_target_id"] . ' ' .  $provisionPerson . ' ' . $provisioningData['CoPerson']['id'], 'failure_summary' => '', 'tries' => 0, 'created' => date('Y-m-d H:i:s')), false);
-        }
-        return true;
-    } else {
-        return false;
-    }
     }
 }

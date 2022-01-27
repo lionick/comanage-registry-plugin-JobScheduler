@@ -50,11 +50,9 @@ class JobSchedulersController extends StandardController
         return;
       }
     } else {
-      //add_job_scheduler();
       $query='SELECT * FROM cm_job_schedulers';
       $jobs = $this->JobScheduler->query($query);
       $this->set('job_scheduler',$jobs);
-      
     }
   }
 
