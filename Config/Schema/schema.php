@@ -28,6 +28,20 @@ class AppSchema extends CakeSchema {
             // Ignore the Exception
           }
           break;
+        case 'job_scheduler_configs':
+          $JobScheduler = ClassRegistry::init('JobScheduler.JobSchedulerConfig');
+          $JobScheduler->useDbConfig = $this->connection;
+          $backup_file = __DIR__ . '/job_scheduler_configs_' . date('y_m_d') . '.csv';
+          if(!file_exists($backup_file)) {
+            touch($backup_file);
+            chmod($backup_file, 0766);
+          }
+          try {
+            $JobScheduler->query("COPY cm_job_scheduler_configs TO '" . $backup_file . "' DELIMITER ',' CSV HEADER");
+          } catch (Exception $e){
+            // Ignore the Exception
+          }
+          break;
       }
     }
 
@@ -43,6 +57,12 @@ class AppSchema extends CakeSchema {
           $JobScheduler->useDbConfig = $this->connection;
           // Add the constraints or any other initializations
           $JobScheduler->query("ALTER TABLE ONLY public.cm_job_schedulers ADD CONSTRAINT cm_job_schedulers_co_id_fkey FOREIGN KEY (co_id) REFERENCES public.cm_cos(id)");
+          break;
+        case 'job_scheduler_configs':
+          $JobSchedulerConfig = ClassRegistry::init('JobScheduler.JobSchedulerConfig');
+          $JobSchedulerConfig->useDbConfig = $this->connection;
+          // Add the constraints or any other initializations
+          $JobSchedulerConfig->query("ALTER TABLE ONLY public.cm_job_scheduler_configs ADD CONSTRAINT cm_job_scheduler_configs_co_id_fkey FOREIGN KEY (co_id) REFERENCES public.cm_cos(id)");
           break;
       }
     }
