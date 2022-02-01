@@ -114,10 +114,10 @@ class JobScheduler extends AppModel
                 $provisionPerson='CoPerson';
             }
             if($group == true) {
-                $this->save(array('id' => null, 'co_id' => $provisioningData["CoGroup"]["co_id"], 'job_type' => 'job', 'job_params' => 'provisioner '. $pluginTarget[$pluginModel->name]["co_provisioning_target_id"] . ' ' .  $provisionGroup . ' ' . $provisioningData['CoGroup']['id'], 'failure_summary' => '', 'tries' => 0, 'created' => date('Y-m-d H:i:s')), false);
+                $this->save(array('id' => null, 'co_id' => $provisioningData["CoGroup"]["co_id"], 'job_type' => JobSchedulerTypeEnum::Provision, 'job_params' => 'provisioner '. $pluginTarget[$pluginModel->name]["co_provisioning_target_id"] . ' ' .  $provisionGroup . ' ' . $provisioningData['CoGroup']['id'], 'failure_summary' => '', 'tries' => 0, 'created' => date('Y-m-d H:i:s')), false);
             }
             if($person == true) {
-                $this->save(array('id' => null, 'co_id' => $provisioningData["CoPerson"]["co_id"], 'job_type' => 'job', 'job_params' => 'provisioner '. $pluginTarget[$pluginModel->name]["co_provisioning_target_id"] . ' ' .  $provisionPerson . ' ' . $provisioningData['CoPerson']['id'], 'failure_summary' => '', 'tries' => 0, 'created' => date('Y-m-d H:i:s')), false);
+                $this->save(array('id' => null, 'co_id' => $provisioningData["CoPerson"]["co_id"], 'job_type' => JobSchedulerTypeEnum::Provision, 'job_params' => 'provisioner '. $pluginTarget[$pluginModel->name]["co_provisioning_target_id"] . ' ' .  $provisionPerson . ' ' . $provisioningData['CoPerson']['id'], 'failure_summary' => '', 'tries' => 0, 'created' => date('Y-m-d H:i:s')), false);
             }
             return true;
         } else {
