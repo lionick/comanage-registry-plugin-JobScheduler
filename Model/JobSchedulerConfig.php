@@ -1,6 +1,4 @@
 <?php
-App::uses('Security', 'Utility');
-App::uses('Hash', 'Utility');
 
 class JobSchedulerConfig extends AppModel
 {

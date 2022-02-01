@@ -1,8 +1,5 @@
 <?php
 
-App::uses('Security', 'Utility');
-App::uses('Hash', 'Utility');
-
 class JobScheduler extends AppModel
 {
     // Required by COmanage Plugins
