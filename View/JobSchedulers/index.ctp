@@ -45,39 +45,39 @@ $this->Html->addCrumb(_txt('ct.job_schedulers'));
       <td>
         <span class="person-name">
           <?php
-          print $job[0]['id'];
+          print $job['JobScheduler']['id'];
           ?>
         </span>
       </td>
       <td>
         <span class="person-email">
           <?php
-          print $job[0]['job_type'];
+          print $job['JobScheduler']['job_type'];
           ?>
         </span>
       </td>
       <td>
         <span class="person-status">
           <?php
-          print $job[0]['job_params'];
+          print $job['JobScheduler']['job_params'];
           ?>
       </td>
       <td>
         <span class="person-status">
           <?php
-          print $job[0]['failure_summary'];
+          print $job['JobScheduler']['failure_summary'];
           ?>
       </td>
       <td>
         <span class="person-status">
           <?php
-          print $job[0]['tries'];
+          print $job['JobScheduler']['tries'];
           ?>
       </td>
       <td>
         <span class="person-status">
           <?php
-          print $job[0]['created'];
+          print $job['JobScheduler']['created'];
           ?>
       </td>
       <td>
@@ -93,13 +93,13 @@ $this->Html->addCrumb(_txt('ct.job_schedulers'));
                 'plugin' => 'job_scheduler', // XXX can inflect from $vv_authenticator['Authenticator']['plugin']
                 'controller' => 'job_schedulers',
                 'action' => 'delete',
-                $job[0]['id']
+                $job['JobScheduler']['id']
                 )
               ) . '\',\''
               . _txt('op.remove') . '\',\''    // dialog confirm button
               . _txt('op.cancel') . '\',\''    // dialog cancel button
               . _txt('op.remove') . '\',[\''   // dialog title
-              . filter_var(_jtxt($job[0]['job_params']),FILTER_SANITIZE_STRING)  // dialog body text replacement strings
+              . filter_var(_jtxt($job['JobScheduler']['job_params']),FILTER_SANITIZE_STRING)  // dialog body text replacement strings
               . '\']);">'
               . _txt('op.delete')
               . '</button>';

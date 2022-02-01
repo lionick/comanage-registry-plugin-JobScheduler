@@ -4,27 +4,6 @@ App::uses('Hash', 'Utility');
 
 class JobSchedulerConfig extends AppModel
 {
-    // Required by COmanage Plugins
-    public $cmPluginType = 'other';
-
-    /**
-     * Expose menu items.
-     *
-     * @ since COmanage Registry v3.1.x
-     * @ return Array with menu location type as key and array of labels, controllers, actions as values.
-     */
-
-    public function cmPluginMenus()
-    {
-        $this->log(__METHOD__ . '::@', LOG_DEBUG);
-        return array(
-            'coconfig' => array(_txt('ct.job_schedulers.1') =>
-            array(
-                'controller' => 'job_scheduler_configs',
-                'action'     => 'edit'
-            )),
-        );
-    }
 
     /**
      * @param Integer $co_id
