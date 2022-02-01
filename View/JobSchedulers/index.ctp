@@ -43,74 +43,72 @@ $this->Html->addCrumb(_txt('ct.job_schedulers'));
     <tr class="co-person line<?php print ($i % 2) + 1; ?>">
 
       <td>
-        <span class="person-name">
+        <span>
           <?php
           print $job['JobScheduler']['id'];
           ?>
         </span>
       </td>
       <td>
-        <span class="person-email">
+        <span>
           <?php
-          print $job['JobScheduler']['job_type'];
+          print JobSchedulerTypeEnum::type[$job['JobScheduler']['job_type']];
           ?>
         </span>
       </td>
       <td>
-        <span class="person-status">
+        <span>
           <?php
           print $job['JobScheduler']['job_params'];
           ?>
       </td>
       <td>
-        <span class="person-status">
+        <span>
           <?php
           print $job['JobScheduler']['failure_summary'];
           ?>
       </td>
       <td>
-        <span class="person-status">
+        <span>
           <?php
           print $job['JobScheduler']['tries'];
           ?>
       </td>
       <td>
-        <span class="person-status">
+        <span>
           <?php
           print $job['JobScheduler']['created'];
           ?>
       </td>
       <td>
         <span class="action">
-        <?php 
-        
-          if($vv_permissions['delete']) {
+          <?php
+
+          if ($vv_permissions['delete']) {
             print '<button type="button" class="deletebutton" title="' . _txt('op.delete')
               . '" onclick="javascript:js_confirm_generic(\''
               . _txt('js.remove') . '\',\''    // dialog body text
               . $this->Html->url(              // dialog confirm URL
                 array(
-                'plugin' => 'job_scheduler', // XXX can inflect from $vv_authenticator['Authenticator']['plugin']
-                'controller' => 'job_schedulers',
-                'action' => 'delete',
-                $job['JobScheduler']['id']
+                  'plugin' => 'job_scheduler', // XXX can inflect from $vv_authenticator['Authenticator']['plugin']
+                  'controller' => 'job_schedulers',
+                  'action' => 'delete',
+                  $job['JobScheduler']['id']
                 )
               ) . '\',\''
               . _txt('op.remove') . '\',\''    // dialog confirm button
               . _txt('op.cancel') . '\',\''    // dialog cancel button
               . _txt('op.remove') . '\',[\''   // dialog title
-              . filter_var(_jtxt($job['JobScheduler']['job_params']),FILTER_SANITIZE_STRING)  // dialog body text replacement strings
+              . filter_var(_jtxt($job['JobScheduler']['job_params']), FILTER_SANITIZE_STRING)  // dialog body text replacement strings
               . '\']);">'
               . _txt('op.delete')
               . '</button>';
           }
-        ?>
+          ?>
       </td>
     </tr>
-
-<?php $i++; ?>
-<?php endforeach; // $job_scheduler 
-?>
+  <?php endforeach; // $job_scheduler 
+  ?>
 </table>
 <?php
 if (empty($job_scheduler)) {
@@ -126,9 +124,6 @@ if (empty($job_scheduler)) {
   print('</div>');
 }
 ?>
-<div class="clearfix"></div>
-
-</div>
 
 <script>
   // Prevents propagations of event handling up to containers
