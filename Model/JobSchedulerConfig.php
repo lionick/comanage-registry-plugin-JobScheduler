@@ -2,18 +2,10 @@
 App::uses('Security', 'Utility');
 App::uses('Hash', 'Utility');
 
-
 class JobSchedulerConfig extends AppModel
 {
     // Required by COmanage Plugins
     public $cmPluginType = 'other';
-
-    // Default display field for cake generated views
-    public $displayField = 'name';
-
-    // Add behaviors
-    public $actsAs = array('Containable',
-                           'Changelog' => array('priority' => 5));
 
     /**
      * Expose menu items.
@@ -45,7 +37,8 @@ class JobSchedulerConfig extends AppModel
         // Get all the config data. Even the EOFs that i have now deleted
         $args = array();
         $args['conditions']['JobSchedulerConfig.co_id'] = $co_id;
-
+        $args['conditions'][] = 'JobSchedulerConfig.job_scheduler_config_id IS NULL';
+        $args['contain'] = false;
         $data = $this->find('first', $args);
         // There is no configuration available for the plugin. Abort
         if (empty($data)) {

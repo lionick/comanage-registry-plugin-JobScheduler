@@ -8,9 +8,6 @@ class JobScheduler extends AppModel
     // Required by COmanage Plugins
     public $cmPluginType = 'other';
 
-    // Default display field for cake generated views
-    public $displayField = 'job_params';
-
      // Association rules from this model to other models
     public $belongsTo = array("Co");  // A Job Scheduler is attached to one CO
 
@@ -92,6 +89,7 @@ class JobScheduler extends AppModel
      * @param  mixed $provisioningData
      * @return void
      */
+
     public function addJobScheduler($pluginTarget, $pluginModel, $provisioningData)
     {
         $group = false;
@@ -126,4 +124,21 @@ class JobScheduler extends AppModel
             return false;
         }
     }
+    
+    /**
+     * getActiveJobs
+     *
+     * @param  mixed $co_id
+     * @param  mixed $max_tries
+     * @return array
+     */
+    
+    public function getActiveJobs($co_id, $max_tries) {
+        $args = array();
+        $args['conditions']['JobScheduler.co_id'] = $co_id;
+        $args['conditions'][] = 'JobScheduler.tries < ' . $max_tries;
+        $activeJobs = $this->find('all', $args);
+        return $activeJobs;
+    }
+    
 }

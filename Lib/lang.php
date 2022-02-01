@@ -1,6 +1,6 @@
 <?php
 /**
- * COmanage Registry Rciam Stats Viewer Plugin Language File
+ * COmanage Registry Job Scheduler Plugin Language File
  *
  * Portions licensed to the University Corporation for Advanced Internet
  * Development, Inc. ("UCAID") under one or more contributor license agreements.
@@ -33,7 +33,8 @@ global $cm_lang, $cm_texts;
 
 $cm_job_scheduler_texts['en_US'] = array(
     'ct.job_scheduler_configs.1' => 'Job Scheduler Configuration',
-    'pl.jobschedulerconfig.settings' => 'Settings',
     'ct.job_schedulers.1' => 'Job Scheduler',
-    'ct.job_schedulers' => 'Job Schedulers'
+    'ct.job_schedulers' => 'Job Schedulers',
+    'pl.job_scheduler_config.job_max_tries' => 'Max Tries',
+    'pl.job_scheduler_config.job_max_tries.desc' => 'The maximum number of attempts will try to run a job',
 );

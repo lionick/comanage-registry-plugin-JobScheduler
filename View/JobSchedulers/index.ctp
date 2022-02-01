@@ -1,9 +1,13 @@
 <?php
-// $params = array('title' => _txt('fd.people', array($cur_co['Co']['name'])));
-// print $this->element("pageTitle", $params);
 
-// Add breadcrumbs
 print $this->element("coCrumb");
+// Add breadcrumbs
+$crumbTxt = _txt('ct.job_scheduler_configs.1');
+$args['plugin'] = 'job_scheduler';
+$args['controller'] = 'job_scheduler_configs';
+$args['action'] = 'edit';
+$args['co'] = $cur_co['Co']['id'];
+$this->Html->addCrumb($crumbTxt, $args);
 $this->Html->addCrumb(_txt('ct.job_schedulers'));
 
 ?>
@@ -110,12 +114,12 @@ $this->Html->addCrumb(_txt('ct.job_schedulers'));
 </table>
 <?php
 if (empty($job_scheduler)) {
-  // No search results, or there are no people in this CO
+  // No jobs found
   print('<div id="noResults">' . _txt('rs.search.none') . '</div>');
   print('<div id="restoreLink">');
   $args = array();
-  $args['plugin'] = null;
-  $args['controller'] = 'job_scheduler';
+  $args['plugin'] = 'job_scheduler';
+  $args['controller'] = 'job_schedulers';
   $args['action'] = 'index';
   $args['co'] = $cur_co['Co']['id'];
   print $this->Html->link(_txt('op.search.restore'), $args);

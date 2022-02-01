@@ -50,16 +50,33 @@
   $token_key = $this->request->params['_Token']['key'];
 
 ?>
-
+<div id="sorter" class="listControl">
+  <ul>
+    <li class="spin">
+      <?php
+      print $this->Html->link(
+        _txt('ct.job_schedulers'),
+        array(
+          'controller' => 'job_schedulers',
+          'action' => 'index',
+          'co' => $this->params['named']['co'],
+        ),
+        array('class' => 'notebutton', 'style' => 'border:unset')
+      );
+      ?>
+    </li>
+  </ul>
+</div>
 <div id="<?php print $this->action; ?>_job_scheduler_configs" class="explorerContainer">
     <div id="jobSchedulerConfigs" class="personExplorer">
         <ul class="fields form-list form-list-admin">         
           <li>
             <div class="field-name">
               <div class="field-title">
-                <?php print $this->Form->label('job_max_tries',_txt('pl.jobschedulerconfig.job_max_tries')); ?>
+                <?php print $this->Form->label('job_max_tries',_txt('pl.job_scheduler_config.job_max_tries')); ?>
                 <span class="required">*</span>
               </div>
+              <span class="field-descr"><?php print _txt('pl.job_scheduler_config.job_max_tries.desc'); ?></span>
             </div>
             <div class="field-info">
               <?php
