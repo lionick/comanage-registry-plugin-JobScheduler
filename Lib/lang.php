@@ -37,4 +37,10 @@ $cm_job_scheduler_texts['en_US'] = array(
     'ct.job_schedulers' => 'Job Schedulers',
     'pl.job_scheduler_config.job_max_tries' => 'Max Tries',
     'pl.job_scheduler_config.job_max_tries.desc' => 'The maximum number of attempts will try to run a job',
+    'fd.job_scheduler.id' => 'ID',
+    'fd.job_scheduler.type' => 'Type',
+    'fd.job_scheduler.params' => 'Job',
+    'fd.job_scheduler.failure_summary' => 'Failure Summary',
+    'fd.job_scheduler.tries' => 'Attempts',
+    'fd.job_scheduler.created' => 'Created',
 );
