@@ -82,12 +82,12 @@ class JobScheduler extends AppModel
 
 
     /**
-     * Job Scheduler Functionality
+     * Add Job Scheduler Functionality
      *  
      * @param  mixed $pluginTarget
      * @param  mixed $pluginModel
      * @param  mixed $provisioningData
-     * @return void
+     * @return boolean
      */
 
     public function addJobScheduler($pluginTarget, $pluginModel, $provisioningData)

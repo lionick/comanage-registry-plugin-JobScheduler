@@ -6,11 +6,11 @@ class JobSchedulersController extends StandardController
   // Class name, used by Cake
   public $name = 'JobSchedulers';
   
-   /**
+  /**
   * By default a new CSRF token is generated for each request, and each token can only be used once.
   * If a token is used twice, the request will be blackholed. Sometimes, this behaviour is not desirable,
   * as it can create issues with single page applications.
-   */
+  */
 
   public $components = array(
     'RequestHandler',
@@ -28,37 +28,28 @@ class JobSchedulersController extends StandardController
     'Co',
   );
 
-  function index() {
-    $fn = "index";
-    $this->log(get_class($this)."::{$fn}::@ ", LOG_DEBUG);
-    if($this->request->is('restful') && !empty($this->params['url']['copersonid'])) {
-      // We need to retrieve via a join, which StandardController::index() doesn't
-      // currently support.
-      
-      try {
-        $groups = $this->CoGroup->findForCoPerson($this->params['url']['copersonid']);
-        
-        if(!empty($groups)) {
-          $this->set('co_groups', $this->Api->convertRestResponse($groups));
-        } else {
-          $this->Api->restResultHeader(204, "CO Person Has No Groups");
-          return;
-        }
-      }
-      catch(InvalidArgumentException $e) {
-        $this->Api->restResultHeader(404, "CO Person Unknown");
-        return;
-      }
-    } else {
-      $query='SELECT * FROM cm_job_schedulers';
-      $jobs = $this->JobScheduler->query($query);
-      $this->set('job_scheduler',$jobs);
-    }
-  }
+  /**
+   * Obtain all Jobs
+   *
+   * @since Job Scheduler v1.0
+   */
 
-  public function delete($id) 
-  { 
-      $this->JobScheduler->query("DELETE FROM cm_job_schedulers WHERE id=".$id.";");
+  function index() {  
+    $jobs = $this->JobScheduler->find('all');
+    $this->set('job_scheduler', $jobs);
+
+  }
+  
+  /**
+   * Delete a Job
+   *
+   * @since Job Scheduler v1.0
+   * @param  mixed $id
+   * @return void
+   */
+  public function delete($id) { 
+      $this->JobScheduler->id = $id;
+      $this->JobScheduler->delete();
       $this->Flash->set(_txt('er.deleted-a', array(filter_var($id,FILTER_SANITIZE_SPECIAL_CHARS))), array('key' => 'success'));
       $this->performRedirect();
      

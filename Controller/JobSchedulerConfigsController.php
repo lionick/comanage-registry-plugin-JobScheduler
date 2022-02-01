@@ -36,7 +36,7 @@ class JobSchedulerConfigsController extends StandardController
    * @return void
    */
   public function edit($id=null) {
-    //Get data if any for the configuration of RciamStatsViewer  
+    //Get data if any for the configuration of Job Scheduler  
     $configData = $this->JobSchedulerConfig->getConfiguration($this->cur_co['Co']['id']);
     $id = isset($configData['JobSchedulerConfig']) ? $configData['JobSchedulerConfig']['id'] : -1;
     
@@ -44,7 +44,7 @@ class JobSchedulerConfigsController extends StandardController
       // We're processing an update
       // if i had already set edit before, now retrieve the entry and update
       if($id > 0){
-        $this->RciamStatsViewer->id = $id;
+        $this->JobSchedulerConfig->id = $id;
         $this->request->data['JobSchedulerConfig']['id'] = $id;
       }
       
@@ -83,13 +83,11 @@ class JobSchedulerConfigsController extends StandardController
    */
 
   public function parseCOID($data = null) {
-    if($this->action == 'edit'
-      ) {
+    if($this->action == 'edit') {
       if(isset($this->request->params['named']['co'])) {
         return $this->request->params['named']['co'];
       }
-    }
-    
+    } 
     return parent::parseCOID();
   }
 
