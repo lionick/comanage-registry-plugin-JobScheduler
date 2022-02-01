@@ -73,7 +73,7 @@
           <li>
             <div class="field-name">
               <div class="field-title">
-                <?php print $this->Form->label('job_max_tries',_txt('pl.job_scheduler_config.job_max_tries')); ?>
+                <?php print $this->Form->label('job_max_tries', _txt('pl.job_scheduler_config.job_max_tries')); ?>
                 <span class="required">*</span>
               </div>
               <span class="field-descr"><?php print _txt('pl.job_scheduler_config.job_max_tries.desc'); ?></span>
@@ -81,7 +81,7 @@
             <div class="field-info">
               <?php
               $value = empty($vv_job_scheduler_configs['JobSchedulerConfig']['job_max_tries']) ? ''
-                      : filter_var($vv_job_scheduler_configs['JobSchedulerConfig']['job_max_tries'],FILTER_SANITIZE_SPECIAL_CHARS);
+                      : filter_var($vv_job_scheduler_configs['JobSchedulerConfig']['job_max_tries'], FILTER_SANITIZE_SPECIAL_CHARS);
               print $this->Form->input('job_max_tries', array('size' => 2,'value' => $value));
               ?>
             </div>

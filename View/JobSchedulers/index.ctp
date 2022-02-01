@@ -13,29 +13,17 @@ $this->Html->addCrumb(_txt('ct.job_schedulers'));
 ?>
 
 <table id="co_people" style="clear:both" class="population-index">
-  <tr>
-    <th>
-      Id
-    </th>
-    <th>
-      Type
-    </th>
-    <th>
-      Job
-    </th>
-    <th>
-      Failure Summary
-    </th>
-    <th>
-      Tries
-    </th>
-    <th>
-      Created
-    </th>
-    <th>
-      Actions
-    </th>
-  </tr>
+  <thead>
+    <tr>
+      <th><?php print(_txt('fd.job_scheduler.id')); ?></th>
+      <th><?php print(_txt('fd.job_scheduler.type')); ?></th>
+      <th><?php print(_txt('fd.job_scheduler.params')); ?></th>
+      <th><?php print(_txt('fd.job_scheduler.failure_summary')); ?></th>
+      <th><?php print(_txt('fd.job_scheduler.tries')); ?></th>
+      <th><?php print(_txt('fd.job_scheduler.created')); ?></th>
+      <th><?php print(_txt('fd.actions')); ?></th>
+    </tr>
+  </thead>
   <?php
   $i = 0;
   ?>
@@ -107,6 +95,9 @@ $this->Html->addCrumb(_txt('ct.job_schedulers'));
           ?>
       </td>
     </tr>
+    <?php
+      $i++;
+    ?>
   <?php endforeach; // $job_scheduler 
   ?>
 </table>
