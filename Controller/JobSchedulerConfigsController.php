@@ -6,19 +6,6 @@ class JobSchedulerConfigsController extends StandardController
   // Class name, used by Cake
   public $name = 'JobSchedulerConfigs';
   
-  /**
-  * By default a new CSRF token is generated for each request, and each token can only be used once.
-  * If a token is used twice, the request will be blackholed. Sometimes, this behaviour is not desirable,
-  * as it can create issues with single page applications.
-  */
-
-  public $components = array(
-    'RequestHandler',
-    'Security' => array(
-      'csrfUseOnce' => false,
-      'csrfExpires' => '+10 minutes'
-  ));
-  
   // This controller needs a CO to be set
   public $requires_co = true;
   
