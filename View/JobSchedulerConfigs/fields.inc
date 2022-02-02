@@ -82,7 +82,7 @@
               <?php
               $value = empty($vv_job_scheduler_configs['JobSchedulerConfig']['job_max_tries']) ? ''
                       : filter_var($vv_job_scheduler_configs['JobSchedulerConfig']['job_max_tries'], FILTER_SANITIZE_SPECIAL_CHARS);
-              print $this->Form->input('job_max_tries', array('size' => 2,'value' => $value));
+              print $this->Form->input('job_max_tries', array('size' => 2, 'value' => $value));
               ?>
             </div>
           </li>
