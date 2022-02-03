@@ -8,8 +8,10 @@ JobScheduler Plugin is used to run provisioning actions asynchronously through a
 2. Run `cd /path/to/comanage/app`
 3. Run `su -c "Console/clearcache" ${APACHE_USER}` [COManage Reference](https://spaces.at.internet2.edu/display/COmanage/Installing+and+Enabling+Registry+Plugins)
 4. Run `Console/cake schema create --file schema.php --path /path/to/comanage/local/Plugin/JobScheduler/Config/Schema`
-5. Enable the `Enable Background Job Scheduler` at Co Settings.
-6. 🍺
+5. Enable the `Enable Background Job Scheduler` option at Co Settings.
+6. Configure the plugin
+7. Create a cronjob similar to this `cd /path/to/comanage/app/ && Console/cake job -c <co_id> provisionJobScheduler`
+8. 🍺
 
 ## License
 
