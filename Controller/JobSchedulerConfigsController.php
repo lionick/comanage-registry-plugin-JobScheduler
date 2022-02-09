@@ -23,6 +23,7 @@ class JobSchedulerConfigsController extends StandardController
    * @return void
    */
   public function edit($id=null) {
+
     //Get data if any for the configuration of Job Scheduler  
     $configData = $this->JobSchedulerConfig->getConfiguration($this->cur_co['Co']['id']);
     $id = isset($configData['JobSchedulerConfig']) ? $configData['JobSchedulerConfig']['id'] : -1;
