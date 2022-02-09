@@ -4,7 +4,7 @@ class JobSchedulerConfig extends AppModel
 {
     // Add behaviors
     public $actsAs = array('Containable',
-    'Changelog' => array('priority' => 5));
+                        'Changelog' => array('priority' => 5));
 
     /**
      * @param Integer $co_id
