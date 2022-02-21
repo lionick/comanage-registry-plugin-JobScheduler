@@ -74,7 +74,8 @@ class AppSchema extends CakeSchema {
     'job_type' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 128),
     'job_params' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 128),
     'failure_summary' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 128),
-    'tries'=> array('type' => 'integer', 'null' => true, 'default' => null),
+    'tries' => array('type' => 'integer', 'null' => true, 'default' => null),
+    'job_data' => array('type' => 'string' , 'null' => true, 'default' => null, 'length' => 1024),
     'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
     'indexes' => array(
       'PRIMARY' => array('unique' => true, 'column' => 'id')

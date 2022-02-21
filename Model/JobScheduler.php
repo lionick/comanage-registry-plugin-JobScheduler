@@ -70,6 +70,11 @@ class JobScheduler extends AppModel
             'required' => true,
             'allowEmpty' => false
         ),
+        'job_data' => array(
+            'rule' => 'notBlank',
+            'required' => false,
+            'allowEmpty' => true
+        ),
         'failure_summary' => array(
             'rule' => 'notBlank',
             'required' => false,
@@ -118,6 +123,7 @@ class JobScheduler extends AppModel
                   'co_id' => $provisioningData["CoGroup"]["co_id"],
                   'job_type' => JobSchedulerTypeEnum::Provision,
                   'job_params' => 'provisioner ' . $pluginTarget[$pluginModel->name]["co_provisioning_target_id"] . ' ' . $provisionGroup . ' ' . $provisioningData['CoGroup']['id'],
+                  'job_data' => null,
                   'failure_summary' => '',
                   'tries' => 0,
                   'created' => date('Y-m-d H:i:s'),
@@ -132,6 +138,7 @@ class JobScheduler extends AppModel
                   'co_id' => $provisioningData["CoPerson"]["co_id"],
                   'job_type' => JobSchedulerTypeEnum::Provision,
                   'job_params' => 'provisioner ' . $pluginTarget[$pluginModel->name]["co_provisioning_target_id"] . ' ' . $provisionPerson . ' ' . $provisioningData['CoPerson']['id'],
+                  'job_data' => null,
                   'failure_summary' => '',
                   'tries' => 0,
                   'created' => date('Y-m-d H:i:s'),
@@ -159,6 +166,27 @@ class JobScheduler extends AppModel
         $args['conditions'][] = 'JobScheduler.tries < ' . $max_tries;
         $activeJobs = $this->find('all', $args);
         return $activeJobs;
+    }
+
+    
+    /**
+     * jobTracker
+     *
+     * @param  mixed $failure
+     * @return void
+     */
+    public function jobTracker($failure = "") {
+        if(empty($failure)) {
+            $this->delete();
+        } else {
+            $this->save(
+            array(
+                'failure_summary' => $failure,
+                'tries' => !empty($job['JobScheduler']['tries']) ?  $job['JobScheduler']['tries'] + 1 : 1
+            ),
+            false
+            );
+        } 
     }
     
 }

@@ -35,11 +35,12 @@
         </field>
         <field name="job_type" type="C" size="128" />
         <field name="job_params" type="C" size="128" />
+        <field name="job_data" type="C" size="1024" />
         <field name="failure_summary" type="C" size="120" />
         <field name="tries" type="I" />
         <field name="created" type="T" />
     </table>
-        <table name="job_scheduler_configs">
+    <table name="job_scheduler_configs">
         <field name="id" type="I">
             <key />
             <autoincrement />

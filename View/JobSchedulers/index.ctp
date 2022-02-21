@@ -1,5 +1,5 @@
 <?php
-
+print $this->Html->css('JobScheduler.style', array('inline' => false));
 print $this->element("coCrumb");
 // Add breadcrumbs
 $crumbTxt = _txt('ct.job_scheduler_configs.1');
@@ -17,6 +17,7 @@ $this->Html->addCrumb(_txt('ct.job_schedulers'));
     <tr>
       <th><?php print(_txt('fd.job_scheduler.id')); ?></th>
       <th><?php print(_txt('fd.job_scheduler.type')); ?></th>
+      <th><?php print(_txt('fd.job_scheduler.params')); ?></th>
       <th><?php print(_txt('fd.job_scheduler.params')); ?></th>
       <th><?php print(_txt('fd.job_scheduler.failure_summary')); ?></th>
       <th><?php print(_txt('fd.job_scheduler.tries')); ?></th>
@@ -48,6 +49,12 @@ $this->Html->addCrumb(_txt('ct.job_schedulers'));
         <span>
           <?php
           print $job['JobScheduler']['job_params'];
+          ?>
+      </td>
+      <td>
+        <span>
+          <?php
+          print $job['JobScheduler']['job_data'];
           ?>
       </td>
       <td>
