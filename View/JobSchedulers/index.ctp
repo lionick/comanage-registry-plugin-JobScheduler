@@ -18,7 +18,7 @@ $this->Html->addCrumb(_txt('ct.job_schedulers'));
       <th><?php print(_txt('fd.job_scheduler.id')); ?></th>
       <th><?php print(_txt('fd.job_scheduler.type')); ?></th>
       <th><?php print(_txt('fd.job_scheduler.params')); ?></th>
-      <th><?php print(_txt('fd.job_scheduler.params')); ?></th>
+      <th><?php print(_txt('fd.job_scheduler.data')); ?></th>
       <th><?php print(_txt('fd.job_scheduler.failure_summary')); ?></th>
       <th><?php print(_txt('fd.job_scheduler.tries')); ?></th>
       <th><?php print(_txt('fd.job_scheduler.created')); ?></th>
