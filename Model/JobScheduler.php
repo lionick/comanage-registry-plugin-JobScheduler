@@ -80,6 +80,11 @@ class JobScheduler extends AppModel
             'required' => false,
             'allowEmpty' => true
         ),
+        'tries' => array(
+            'rule' => 'notBlank',
+            'required' => false,
+            'allowEmpty' => true
+        ),
     );
 
 
@@ -177,12 +182,13 @@ class JobScheduler extends AppModel
      */
     public function jobTracker($failure = "") {
         if(empty($failure)) {
-            $this->delete();
+            //$this->delete();
         } else {
+            $this->log(__METHOD__ . "::tries values => " .  var_export($this->id, true), LOG_DEBUG);
             $this->save(
             array(
                 'failure_summary' => $failure,
-                'tries' => !empty($job['JobScheduler']['tries']) ?  $job['JobScheduler']['tries'] + 1 : 1
+                'tries' => !empty($this->tries) ?  $this->tries + 1 : 1
             ),
             false
             );
