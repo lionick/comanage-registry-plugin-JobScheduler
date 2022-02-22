@@ -182,9 +182,8 @@ class JobScheduler extends AppModel
      */
     public function jobTracker($failure = "") {
         if(empty($failure)) {
-            //$this->delete();
+            $this->delete();
         } else {
-            $this->log(__METHOD__ . "::tries values => " .  var_export($this->id, true), LOG_DEBUG);
             $this->save(
             array(
                 'failure_summary' => $failure,
